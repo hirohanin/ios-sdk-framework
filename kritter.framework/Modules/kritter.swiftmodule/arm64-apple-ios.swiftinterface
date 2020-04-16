@@ -1,0 +1,79 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2 (swiftlang-1103.0.32.1 clang-1103.0.32.29)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name kritter
+import AdSupport
+import Foundation
+import Swift
+import UIKit
+@_exported import kritter
+public class DeviceInfo {
+  public init(mccmnc: Swift.String? = nil, dnt: Swift.Int? = nil, lmt: Swift.Int? = nil, latitude: Swift.Float? = nil, longitude: Swift.Float? = nil, userAgent: Swift.String)
+  @objc deinit
+}
+public class UserInfo {
+  public init(userId: Swift.String? = nil, additionalUserInfo: [Swift.String : Swift.String]? = nil, consent: Swift.String? = nil, gdpr: Swift.Int? = nil, coppa: Swift.Int? = nil)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class AdSlotInfo {
+  public static func getBannerSlot(width: Swift.Int, height: Swift.Int) -> kritter.AdSlotInfo?
+  public static func getMultipleBannerSlots(numberOfAds: Swift.Int, width: Swift.Int, height: Swift.Int) -> kritter.AdSlotInfo
+  public static func getMultipleAdSlots(slotInfos: [kritter.SlotInfo]) -> kritter.AdSlotInfo
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class Imp : Swift.Codable {
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public enum RequestFailureReason {
+  case UNKNOWN
+  case NO_INTERNET_CONNECTION
+  case USER_CANCELLED
+  case TIMEOUT
+  case SERVER_ERROR
+  case BUG
+  public static func == (a: kritter.RequestFailureReason, b: kritter.RequestFailureReason) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public class AppInfo {
+  public init(bundleId: Swift.String? = nil, version: Swift.String? = nil, keywords: Swift.String? = nil)
+  @objc deinit
+}
+public protocol AdCallbackDelegate : AnyObject {
+  func handleAdResponse(adResponseInfo: kritter.AdResponseInfo)
+  func handleAdResponses(adResponseInfos: [kritter.AdResponseInfo])
+  func handleAdResponseFailed(reason: kritter.RequestFailureReason)
+  func handleNoFillResponse()
+}
+public class RequestInfo {
+  public init(adSlotInfo: kritter.AdSlotInfo? = nil, userInfo: kritter.UserInfo? = nil, deviceInfo: kritter.DeviceInfo? = nil, appInfo: kritter.AppInfo? = nil)
+  @objc deinit
+}
+public class KritterAdFetcher {
+  weak public var delegate: kritter.AdCallbackDelegate!
+  public init()
+  public func fetchAd(requestInfo: kritter.RequestInfo)
+  @objc deinit
+}
+public class BannerSlotInfo : kritter.SlotInfo {
+  public var secure: Swift.Int
+  public init(width: Swift.Int? = nil, height: Swift.Int? = nil, secure: Swift.Int = 0)
+  public func getImpression() -> kritter.Imp
+  @objc deinit
+}
+public protocol SlotInfo {
+  var secure: Swift.Int { get set }
+  func getImpression() -> kritter.Imp
+}
+public struct AdResponseInfo {
+  public let contentUrl: Swift.String
+  public let clickUrl: Swift.String
+  public let renderUrl: Swift.String
+  public let adm: Swift.String
+  public init(contentUrl: Swift.String, clickUrl: Swift.String, renderUrl: Swift.String, adm: Swift.String)
+}
+extension kritter.RequestFailureReason : Swift.Equatable {}
+extension kritter.RequestFailureReason : Swift.Hashable {}
